@@ -1,0 +1,41 @@
+grid =[[1]*10 for n in range(10)]
+
+w = 60 #width
+o = w * 0.9 #size of wall within grid
+m = (w - o)/2 #start point of wall within grid
+z = w * 0.8 #size of navigation points within grid
+
+def setup():
+    size(600,600)
+    
+def draw():
+    x,y = 0,0
+    for row in grid:
+        for col in row:
+            rect(x, y, w, w)
+            if col == -1:
+               s = createShape(RECT, x, y, o, o)
+               s.setFill(color(0))
+               shape(s, m, m)
+            elif col == 2:
+               s = createShape(ELLIPSE, x, y, z, z)
+               s.setFill(color(255, 0, 0))
+               s.setStroke(color(255, 0, 0))
+               shape(s, w/2, w/2)
+            x = x + w
+        y = y + w
+        x = 0
+
+def mouseDragged():
+    grid[mouseY/w][mouseX/w] = -1
+    
+def mousePressed():
+    grid[mouseY/w][mouseX/w] = grid[mouseY/w][mouseX/w] * -1
+    
+def keyPressed():
+    #needs to be improved #conider 'class' object
+    if ((key == 'C') or (key == 'c')): 
+        grid[mouseY/w][mouseX/w] = 2
+    if key == ENTER:
+        save("map.jpg")
+    
