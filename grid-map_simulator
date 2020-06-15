@@ -33,7 +33,7 @@ def mousePressed():
     grid[mouseY/w][mouseX/w] = grid[mouseY/w][mouseX/w] * -1
     
 def keyPressed():
-    #needs to be improved #conider 'class' object
+    #needs to be improved #consider 'class' object
     if ((key == 'C') or (key == 'c')): 
         grid[mouseY/w][mouseX/w] = 2
     if key == ENTER:
