@@ -1,0 +1,33 @@
+int w = 10, h = 10, bs = 60, player = 1;
+/*
+w = number of columns
+h = number of rows
+bs = pixels per box
+*/
+int[][] board = new int[h][w];
+
+void setup(){
+  size(600, 600); //change according to (w*bs) and (h*bs)
+  ellipseMode(CORNER);
+}
+
+void mousePressed(){
+  int x = mouseX / bs;
+  int y = mouseY / bs;
+
+  board[y][x] = player;
+  player = player == 1?2:1;
+}
+
+void draw(){
+  for(int j=0; j<h; j++){
+    for(int i=0; i<w; i++){
+      fill(255);
+      rect(i*bs, j*bs, bs, bs);
+      if(board[j][i] > 0){
+        fill(board[j][i]==1?255:0, board[j][i]==2?255:0, 0);
+        ellipse(i*bs, j*bs, bs, bs);      
+      }          
+    }  
+  } 
+}
