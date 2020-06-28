@@ -5,14 +5,23 @@ h = number of rows
 bs = pixels per box
 */
 float obs = bs * 0.8; //obstacle size
+
 float wp = bs * 0.8; //waypoint size
+
 float mp = (bs - obs)/2; //midpoint of grid to draw object
 
 int[][] board = new int[h][w];
 
+int[][] segments = new int[4][2];
+
+ArrayList<int[][]> segmentList;
+
+Boolean segmentMode = false;
+
 void setup(){
   size(600, 600); //change according to (w*bs) and (h*bs)
   ellipseMode(CORNER);
+  segmentList = new ArrayList<int[][]>();
 }
 
 void draw(){
@@ -21,14 +30,12 @@ void draw(){
       fill(255);
       stroke(0);
       rect(i*bs, j*bs, bs, bs);
-      //create black boundaries
       if(board[j][i] == -1){
         fill(0, 0, 0);
         noStroke();
         rect(((i*bs)+mp), ((j*bs)+mp), obs, obs);      
       }
       else
-        //create red waypoints
         if(board[j][i] == 2){
           fill(255, 0, 0);
           noStroke();
@@ -44,13 +51,28 @@ void mouseDragged(){
 
 void mousePressed(){
   board[mouseY/bs][mouseX/bs] = board[mouseY/bs][mouseX/bs] * -1;
+  
+  if(segmentMode == true){
+    int v = 0;
+    while(v < 4){
+      segments[v][0] = (mouseX/bs);
+      segments[v][1] = (mouseY/bs);
+      if (mousePressed == true){
+        v++;
+      }
+    }
+    segmentMode = false;
+  }
 }
 
 void keyPressed(){
-  if((key == 'W') || (key == 'w')){
+  if((key == 'W') || (key == 'w')){ //set waypoint by moving the cursor onto the grid and press 'w'
     board[mouseY/bs][mouseX/bs] = 2;
   }
-    if((key == 'S') || (key == 's')){
-      save("map.jpg");
-    }
+  if((key == 'I') || (key == 'i')){ //export the grid map as an image 
+    save("map.jpg");
+  }
+  if((key == 'D') || (key == 'd')){ 
+    segmentMode = true;
+  }
 }
