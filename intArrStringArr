@@ -1,0 +1,9 @@
+int[] numbers = {90, 170, 182, 200};
+String list[] = new String[(numbers.length)/2];
+
+for (int i = 0; i < (numbers.length)/2; i++){
+  list[i] = str(numbers[(i*2)]) + " " + str(numbers[i*2+1]);
+}
+
+// Writes the strings to a file, each on a separate line
+saveStrings("numbers.txt", list);
