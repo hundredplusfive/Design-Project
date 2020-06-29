@@ -12,16 +12,17 @@ float mp = (bs - obs)/2; //midpoint of grid to draw object
 
 int[][] board = new int[h][w];
 
-int[][] segments = new int[4][2];
+int[] segments = new int[8];
+int v = 0; //coordniates counter
 
-ArrayList<int[][]> segmentList;
+ArrayList<int[]> segmentList;
 
 Boolean segmentMode = false;
 
 void setup(){
   size(600, 600); //change according to (w*bs) and (h*bs)
   ellipseMode(CORNER);
-  segmentList = new ArrayList<int[][]>();
+  segmentList = new ArrayList<int[]>();
 }
 
 void draw(){
@@ -53,15 +54,17 @@ void mousePressed(){
   board[mouseY/bs][mouseX/bs] = board[mouseY/bs][mouseX/bs] * -1;
   
   if(segmentMode == true){
-    int v = 0;
-    while(v < 4){
-      segments[v][0] = (mouseX/bs);
-      segments[v][1] = (mouseY/bs);
-      if (mousePressed == true){
-        v++;
+    segments[v*2] = (mouseX/bs);
+    segments[(v*2)+1] = (mouseY/bs);
+    v++;
+    if(v == 4){
+      segmentList.add(new int[]{segments[0], segments[1], segments[2], segments[3], segments[4], segments[5], segments[6], segments[7]});
+      segmentMode = false;
+      for(int[] row : segmentList){
+        println(row);
       }
+      v = 0;
     }
-    segmentMode = false;
   }
 }
 
