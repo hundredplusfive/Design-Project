@@ -49,7 +49,7 @@ void draw(){
             rect(i*bs, j*bs, bs, bs);      
           }
     }  
-  } 
+  }
 }
 
 void mouseDragged(){
@@ -108,9 +108,17 @@ void segmentArea(int[] s){
   int colStart = s[6], colEnd = s[0];
   int roStart = s[7], roEnd = s[5];
   
+  int aSize = ((colEnd - colStart) + 1) * ((roEnd - roStart) + 1);
+  int aCnt = 0;
+  String list[] = new String[aSize];
+  
   for(int cs = colStart; cs <= colEnd; cs++){
     for(int rs = roStart; rs <= roEnd; rs++){
       board[rs][cs] = 3;
+      list[aCnt] = "(" + str(rs) + "," + str(cs) + ")";
+      aCnt++;
     }
   }
+  //printArray(list);
+  saveStrings("segments.tx", list);
 }
