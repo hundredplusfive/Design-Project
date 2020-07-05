@@ -14,6 +14,7 @@ int[][] board = new int[h][w];
 
 int[] segments = new int[8];
 int v = 0; //coordniates counter
+int segAid = 0; //segment area index
 
 ArrayList<int[]> segmentList; //dynamic array
 
@@ -115,10 +116,10 @@ void segmentArea(int[] s){
   for(int cs = colStart; cs <= colEnd; cs++){
     for(int rs = roStart; rs <= roEnd; rs++){
       board[rs][cs] = 3;
-      list[aCnt] = "(" + str(rs) + "," + str(cs) + ")";
+      list[aCnt] = str(rs) + "-" + str(cs);
       aCnt++;
     }
   }
   //printArray(list);
-  saveStrings("segments.tx", list);
+  saveStrings("segment-" + str(segAid++) + ".txt", list);
 }
