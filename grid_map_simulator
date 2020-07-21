@@ -84,22 +84,17 @@ void keyPressed(){
   if((key == 'D') || (key == 'd')){ 
     segmentMode = true;
   }
-  if((key == 'L') || (key == 'l')){ //print segment vertices coordinate
+  if((key == 'L') || (key == 'l')){ //export segment dimensions
     for(int[] row : segmentList){
-      for(int i = 0; i < 8; i++){
-        print(row[i]);
+
+        int colSize = ((row[0] - row[6]) + 1);
+        int roSize = ((row[5] - row[7]) + 1);
         
-        if (i%2 == 0){
-          print("-");
-        }
-        else{
-          print(" ");
-        }
+        String list[] = new String[1];
         
-        if(i == 7){
-          println();
-        }
-      }
+        list[0] = str(colSize) + "x" + str(roSize);
+        
+        saveStrings("segment-" + str(segAid++) + ".txt", list);
     }
   }
 }
@@ -109,17 +104,9 @@ void segmentArea(int[] s){
   int colStart = s[6], colEnd = s[0];
   int roStart = s[7], roEnd = s[5];
   
-  int aSize = ((colEnd - colStart) + 1) * ((roEnd - roStart) + 1);
-  int aCnt = 0;
-  String list[] = new String[aSize];
-  
   for(int cs = colStart; cs <= colEnd; cs++){
     for(int rs = roStart; rs <= roEnd; rs++){
       board[rs][cs] = 3;
-      list[aCnt] = str(rs) + "-" + str(cs);
-      aCnt++;
     }
   }
-  //printArray(list);
-  saveStrings("segment-" + str(segAid++) + ".txt", list);
 }
