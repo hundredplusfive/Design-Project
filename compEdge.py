@@ -28,16 +28,17 @@ def edge_check(a, b, c, d):
         return True
     else:
         return False
-    
-r = 3
-c = 3
+
+#insert code to open .txt to state the lattice dimension
+# ---> here    
+r = 2
+c = 2
 
 #number of vertices
 noV = 0 
 
 #list of coordinate objects
 c_list = []
-
 
 #row increment
 for i in range(r):
@@ -50,10 +51,9 @@ for i in range(r):
 #print coordinate list
 for obj in c_list:
     print(obj.id, obj.x, obj.y)
-
-#list of vertice connections
-v_list = []
  
+f = open("edge.txt", "w+")
+    
 for base in c_list:
     for target in c_list:
         #set compare all coordinate sets to each other
@@ -62,13 +62,6 @@ for base in c_list:
         #check if edge exist
         if edge_check(tx, ty, target.x, target.y) == True:
            e = Edge(base.id, target.id)
-           v_list.append(e)
+           f.write(str(base.id) + " -> " + str(target.id) + "\n")
 
-print("\n")
-
-#print list of verice connections
-for obj in v_list:
-    print(obj.root, obj.branch)
-        
-        
-        
+f.close()
