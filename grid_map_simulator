@@ -126,8 +126,9 @@ void keyPressed(){
         }
         
         //export to text file
-        String list[] = new String[1];
-        list[0] = str(colSize) + "x" + str(roSize) + "\n" + str(sp) + ">>" + str(ep);
+        String list[] = new String[2];
+        list[0] = str(colSize) + "x" + str(roSize);
+        list[1] = str(sp) + ">>" + str(ep);
         saveStrings("segment-" + str(segAid++) + ".txt", list);
     }
   }
