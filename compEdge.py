@@ -5,6 +5,7 @@ Created on Mon Jul 20 20:00:50 2020
 
 @author: luting
 """
+import numpy as np
 
 class Vertice:
     def __init__(self, a, b, c):
@@ -12,11 +13,7 @@ class Vertice:
         self.x = b
         self.y = c
 
-class Edge:
-    def __init__(self, a, b):
-        self.root = a
-        self.branch = b
-
+#lattice-based 4-edge check
 def edge_check(a, b, c, d):
     if c-a == 1 and d-b == 0:
         return True
@@ -29,21 +26,25 @@ def edge_check(a, b, c, d):
     else:
         return False
 
-#insert code to open .txt to state the lattice dimension
-# ---> here    
-r = 2
-c = 2
+#import dimension, start/end details from .txt
+f = open("/home/luting/Documents/DP/processingJV/segment-0.txt",'r')
 
-#number of vertices
-noV = 0 
+arrDimSE = [] #temp array 
 
-#list of coordinate objects
-c_list = []
+for line in f.readlines():
+    arrDimSE.append(line)
 
-#row increment
-for i in range(r):
-    #column increment
-    for j in range(c):
+c, r = arrDimSE[0].split('x') #number of columns, number of rows
+s, e = arrDimSE[1].split('>>') #start, end vertice
+
+arrDimSE.clear()
+
+noV = 0 #number of vertices
+
+c_list = [] #list of coordinate objects
+
+for i in range(int(r)): #row increment
+    for j in range(int(c)): #column increment
         v = Vertice(noV, j, i)
         c_list.append(v)
         noV += 1
@@ -51,9 +52,17 @@ for i in range(r):
 #print coordinate list
 for obj in c_list:
     print(obj.id, obj.x, obj.y)
- 
-f = open("edge.txt", "w+")
     
+#adjancency matrix
+adjMat = np.zeros([noV, noV], dtype = int)
+print()
+print(adjMat)
+
+#export function    
+f = open("edge.txt", "w+")
+
+f.write(str(noV) + "\n")
+
 for base in c_list:
     for target in c_list:
         #set compare all coordinate sets to each other
@@ -61,7 +70,9 @@ for base in c_list:
         ty = base.y
         #check if edge exist
         if edge_check(tx, ty, target.x, target.y) == True:
-           e = Edge(base.id, target.id)
-           f.write(str(base.id) + " -> " + str(target.id) + "\n")
+           f.write(str(base.id) + "->" + str(target.id) + "\n")
+           adjMat[base.id, target.id] = 1
 
 f.close()
+print()        
+print(adjMat)        
