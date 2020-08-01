@@ -3,8 +3,7 @@
 
 class Graph(): 
 	def __init__(self, vertices): 
-		self.graph = [[0 for column in range(vertices)] 
-							for row in range(vertices)] 
+		self.graph = [[0 for column in range(vertices)] for row in range(vertices)] 
 		self.V = vertices 
 
 	''' Check if this vertex is an adjacent vertex 
@@ -40,7 +39,7 @@ class Graph():
 		# Try different vertices as a next candidate 
 		# in Hamiltonian Cycle. We don't try for 0 as 
 		# we included 0 as starting point in hamCycle() 
-		for v in range(1,self.V): 
+		for v in range(0,self.V): 
 
 			if self.isSafe(v, pos, path) == True: 
 
@@ -55,14 +54,14 @@ class Graph():
 
 		return False
 
-	def hamCycle(self): 
+	def hamCycle(self, s): 
 		path = [-1] * self.V 
 
 		''' Let us put vertex 0 as the first vertex 
 			in the path. If there is a Hamiltonian Cycle, 
 			then the path can be started from any point 
 			of the cycle as the graph is undirected '''
-		path[0] = 0
+		path[0] = s
 
 		if self.hamCycleUtil(path,1) == False: 
 			print ("Solution does not exist\n") 
@@ -78,8 +77,7 @@ class Graph():
 			print (vertex, end = " ") 
 		print (path[0], "\n") 
 
-# Driver Code 
-
+#adjacncey list to matrix conversion integrated
 f = open('edge.txt','r')
 
 arrVerAdj = []
@@ -88,12 +86,14 @@ for line in f.readlines():
     arrVerAdj.append(line)
     
 g = Graph(int(arrVerAdj[0]))  
-    
-for element in arrVerAdj[1:]:
-    ver, adj = line.split('->')
+
+s, e = arrVerAdj[1].split(">>")
+
+for element in arrVerAdj[2:]: #skips first two lines
+    ver, adj = element.split('->')
     g.graph[int(ver)][int(adj)] = 1
 
 arrVerAdj.clear()
 
 # Print the solution 
-g.hamCycle(); 
+g.hamCycle(int(s)); 
