@@ -35,9 +35,6 @@ for line in f.readlines():
     arrDimSE.append(line)
 
 c, r = arrDimSE[0].split('x') #number of columns, number of rows
-s, e = arrDimSE[1].split('>>') #start, end vertice
-
-arrDimSE.clear()
 
 noV = 0 #number of vertices
 
@@ -62,6 +59,7 @@ print(adjMat)
 f = open("edge.txt", "w+")
 
 f.write(str(noV) + "\n")
+f.write(arrDimSE[1])
 
 for base in c_list:
     for target in c_list:
@@ -74,5 +72,7 @@ for base in c_list:
            adjMat[base.id, target.id] = 1
 
 f.close()
+arrDimSE.clear()
+
 print()        
 print(adjMat)        
