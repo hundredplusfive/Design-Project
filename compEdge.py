@@ -6,6 +6,8 @@ Created on Mon Jul 20 20:00:50 2020
 @author: luting
 """
 import numpy as np
+import hamiltonianCycle
+import dfs
 
 class Vertice:
     def __init__(self, a, b, c):
@@ -47,13 +49,12 @@ for i in range(int(r)): #row increment
         noV += 1
 
 #print coordinate list
+print("\n\nVerticeID-to-Coordinate Reference")
 for obj in c_list:
     print(obj.id, obj.x, obj.y)
     
-#adjancency matrix
+#adjancency matrix filled with zeroes
 adjMat = np.zeros([noV, noV], dtype = int)
-print()
-print(adjMat)
 
 #export function    
 f = open("edge.txt", "w+")
@@ -74,5 +75,32 @@ for base in c_list:
 f.close()
 arrDimSE.clear()
 
-print()        
-print(adjMat)        
+print("\nAdjancency Matrix of Segemented Area")        
+print(adjMat)
+
+#path planning
+f = open("edge.txt", "r")
+
+arrVerAdj = []
+
+for line in f.readlines():
+    arrVerAdj.append(line)
+    
+cc_hc = hamiltonianCycle.Graph(int(arrVerAdj[0]))
+cc_dfs = dfs.Graph()    
+
+s, e = arrVerAdj[1].split(">>")
+
+for element in arrVerAdj[2:]: #skips first two lines
+    ver, adj = element.split('->')
+    cc_hc.graph[int(ver)][int(adj)] = 1
+    cc_dfs.addEdge(int(ver),int(adj))
+
+# Print the solution
+print("\nHamiltonian cycle solution:") 
+cc_hc.hamCycle(int(s))
+
+print("Depth First Traversal solution:")
+cc_dfs.printSolution(s)       
+
+arrVerAdj.clear()
