@@ -39,8 +39,7 @@ void draw(){
       }
       else
         if(board[j][i] == 1){ //sets navigation points in green circle with blue background
-          fill(0, 0, 255);
-          noStroke();
+          fill(186, 186, 186);
           rect(i*bs, j*bs, bs, bs);    
           fill(0, 255, 0);
           noStroke();
@@ -48,8 +47,7 @@ void draw(){
         }
         else
           if(board[j][i] == 2){ //sets navigation points in red circle with blue background
-            fill(0, 0, 255);
-            noStroke();
+            fill(186, 186, 186);
             rect(i*bs, j*bs, bs, bs);    
             fill(255, 0, 0);
             noStroke();
@@ -57,8 +55,7 @@ void draw(){
           }
           else
             if(board[j][i] == 3){ //sets segmenteed areas in blue squares
-              fill(0, 0, 255);
-              noStroke();
+              fill(186, 186, 186);
               rect(i*bs, j*bs, bs, bs);      
             }
     }  
@@ -126,8 +123,9 @@ void keyPressed(){
         }
         
         //export to text file
-        String list[] = new String[1];
-        list[0] = str(colSize) + "x" + str(roSize) + "\n" + str(sp) + ">>" + str(ep);
+        String list[] = new String[2];
+        list[0] = str(colSize) + "x" + str(roSize);
+        list[1] = str(sp) + ">>" + str(ep);
         saveStrings("segment-" + str(segAid++) + ".txt", list);
     }
   }
