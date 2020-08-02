@@ -67,12 +67,11 @@ class Graph():
 			print ("Solution does not exist\n") 
 			return False
 
-		self.printSolution(path) 
+		self.printSolution(path, s) 
 		return True
 
-	def printSolution(self, path): 
-		print ("Solution Exists: Following", 
-				"is one Hamiltonian Cycle") 
+	def printSolution(self, path, s): 
+		print ("Starting from Vertice " + str(s)) 
 		for vertex in path: 
 			print (vertex, end = " ") 
 		print (path[0], "\n") 
