@@ -38,17 +38,26 @@ void draw(){
         rect(((i*bs)+mp), ((j*bs)+mp), obs, obs);      
       }
       else
-        if(board[j][i] == 2){ //sets navigation points in red circles
-          fill(255, 0, 0);
+        if(board[j][i] == 1){ //sets navigation points in green circle with blue background
+          fill(186, 186, 186);
+          rect(i*bs, j*bs, bs, bs);    
+          fill(0, 255, 0);
           noStroke();
           ellipse(((i*bs)+mp), ((j*bs)+mp), wp, wp);
         }
         else
-          if(board[j][i] == 3){ //sets segmenteed areas in blue squares
-            fill(0, 0, 255);
+          if(board[j][i] == 2){ //sets navigation points in red circle with blue background
+            fill(186, 186, 186);
+            rect(i*bs, j*bs, bs, bs);    
+            fill(255, 0, 0);
             noStroke();
-            rect(i*bs, j*bs, bs, bs);      
+            ellipse(((i*bs)+mp), ((j*bs)+mp), wp, wp);
           }
+          else
+            if(board[j][i] == 3){ //sets segmenteed areas in blue squares
+              fill(186, 186, 186);
+              rect(i*bs, j*bs, bs, bs);      
+            }
     }  
   }
 }
@@ -75,7 +84,10 @@ void mousePressed(){
 }
 
 void keyPressed(){
-  if((key == 'W') || (key == 'w')){ //set waypoint by moving the cursor onto the grid and press 'w'
+  if((key == 'S') || (key == 's')){ //set start point by moving the cursor onto the grid and press 's'
+    board[mouseY/bs][mouseX/bs] = 1;
+  }
+  if((key == 'E') || (key == 'e')){ //set end point by moving the cursor onto the grid and press 'e'
     board[mouseY/bs][mouseX/bs] = 2;
   }
   if((key == 'I') || (key == 'i')){ //export the grid map as an image 
@@ -84,22 +96,37 @@ void keyPressed(){
   if((key == 'D') || (key == 'd')){ 
     segmentMode = true;
   }
-  if((key == 'L') || (key == 'l')){ //print segment vertices coordinate
-    for(int[] row : segmentList){
-      for(int i = 0; i < 8; i++){
-        print(row[i]);
+  if((key == 'L') || (key == 'l')){ //export segment dimensions and waypoints
+    for(int[] xy : segmentList){
         
-        if (i%2 == 0){
-          print("-");
-        }
-        else{
-          print(" ");
+        //segment dimensions
+        int colSize = ((xy[0] - xy[6]) + 1);
+        int roSize = ((xy[5] - xy[7]) + 1);
+        
+        //start and end points
+        int vertCount = 0; //counter for verticeID
+        int sp = -1, ep = -1;
+        
+        int colStart = xy[6], colEnd = xy[0];
+        int roStart = xy[7], roEnd = xy[5];
+        
+        for(int cs = colStart; cs <= colEnd; cs++){
+          for(int rs = roStart; rs <= roEnd; rs++){
+            if(board[rs][cs] == 1){
+              sp = vertCount;
+            }
+            if(board[rs][cs] == 2){
+              ep = vertCount;
+            }
+            vertCount++;
+          }
         }
         
-        if(i == 7){
-          println();
-        }
-      }
+        //export to text file
+        String list[] = new String[2];
+        list[0] = str(colSize) + "x" + str(roSize);
+        list[1] = str(sp) + ">>" + str(ep);
+        saveStrings("segment-" + str(segAid++) + ".txt", list);
     }
   }
 }
@@ -109,17 +136,9 @@ void segmentArea(int[] s){
   int colStart = s[6], colEnd = s[0];
   int roStart = s[7], roEnd = s[5];
   
-  int aSize = ((colEnd - colStart) + 1) * ((roEnd - roStart) + 1);
-  int aCnt = 0;
-  String list[] = new String[aSize];
-  
   for(int cs = colStart; cs <= colEnd; cs++){
     for(int rs = roStart; rs <= roEnd; rs++){
       board[rs][cs] = 3;
-      list[aCnt] = str(rs) + "-" + str(cs);
-      aCnt++;
     }
   }
-  //printArray(list);
-  saveStrings("segment-" + str(segAid++) + ".txt", list);
 }
