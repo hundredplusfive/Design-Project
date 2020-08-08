@@ -1,6 +1,6 @@
 # Python program for solution of 
 # hamiltonian cycle problem 
-
+# This code (line 4 to 77) is contributed by Divyanshu Mehta. The remaining codes are extended from it   
 class Graph(): 
 	def __init__(self, vertices): 
 		self.graph = [[0 for column in range(vertices)] for row in range(vertices)] 
