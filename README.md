@@ -9,3 +9,5 @@ FAQ:
   Under the void setup() change the size parameters.
 2. How to increase number of grids (columns and rows)?
   On the first line of the code, change the 'w' and 'h' variables.
+
+Usage instruction: To be updated after 21 August 2020
