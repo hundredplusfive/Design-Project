@@ -1,6 +1,8 @@
 # Design-Project
 "Integration of path planning and area mapping for autonomous cleaning robot"
 
+Demonstration video: https://youtu.be/LP9Fz7td_1Y
+
 grid-map_simulator code = processing.java
 
 [grid-map_simulator]
