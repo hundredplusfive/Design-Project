@@ -29,7 +29,7 @@ def edge_check(a, b, c, d):
         return False
 
 #import dimension, start/end details from .txt
-f = open("/home/luting/Documents/DP/processingJV/segment-0.txt",'r')
+f = open("/home/hundredplusfive/Documents/DP/processingJV/segment-0.txt",'r')
 
 arrDimSE = [] #temp array 
 
