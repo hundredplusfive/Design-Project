@@ -38,7 +38,7 @@ void draw(){
         rect(((i*bs)+mp), ((j*bs)+mp), obs, obs);      
       }
       else
-        if(board[j][i] == 1){ //sets navigation points in green circle with blue background
+        if(board[j][i] == 1){ //sets navigation points in green circle with grey background
           fill(186, 186, 186);
           rect(i*bs, j*bs, bs, bs);    
           fill(0, 255, 0);
@@ -46,7 +46,7 @@ void draw(){
           ellipse(((i*bs)+mp), ((j*bs)+mp), wp, wp);
         }
         else
-          if(board[j][i] == 2){ //sets navigation points in red circle with blue background
+          if(board[j][i] == 2){ //sets navigation points in red circle with grey background
             fill(186, 186, 186);
             rect(i*bs, j*bs, bs, bs);    
             fill(255, 0, 0);
@@ -54,8 +54,14 @@ void draw(){
             ellipse(((i*bs)+mp), ((j*bs)+mp), wp, wp);
           }
           else
-            if(board[j][i] == 3){ //sets segmenteed areas in blue squares
+            if(board[j][i] == 3){ //sets segmented areas in grey squares
               fill(186, 186, 186);
+              rect(i*bs, j*bs, bs, bs);      
+            }
+            else
+            if(board[j][i] == 0){ //clears the grid to default 
+              fill(255);
+              stroke(0);
               rect(i*bs, j*bs, bs, bs);      
             }
     }  
@@ -93,8 +99,11 @@ void keyPressed(){
   if((key == 'I') || (key == 'i')){ //export the grid map as an image 
     save("map.jpg");
   }
-  if((key == 'D') || (key == 'd')){ 
+  if((key == 'D') || (key == 'd')){ //activate segment function
     segmentMode = true;
+  }
+  if((key == 'C') || (key == 'c')){ //clear a grid by moving the cursor onto the grid and press 'c'
+    board[mouseY/bs][mouseX/bs] = 0;
   }
   if((key == 'L') || (key == 'l')){ //export segment dimensions and waypoints
     for(int[] xy : segmentList){
