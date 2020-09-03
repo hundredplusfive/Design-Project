@@ -24,9 +24,12 @@ Objectives:
 - demacates the entire floor plan into segments with coressponding start points
 
 How to use:
+
 (1) Create floor plan or obstacles = using the mouse, click + hold + drag the cursor on the preferred grids
 
-(2) Erase grid status (from occupied to unoccupied) = using the mouse, click onnce on the selected grid
+(2) Erase grid status (from occupied to unoccupied) =
+    1. Hover the mouse cursor on the selected grid
+    2. Keyboad press of 'c' or 'C'
 
 (3) Create square or rectangular segements = 
     1. keyboard press of 'd' or 'd' to start the segment marking sequence
@@ -45,8 +48,12 @@ How to use:
     2. Keyboad press of 's' or 'S'
     
 (5) Export information of all segments into a text file = 
-    1. keyboard press of 'l' or 'L'
+    1. keyboard press of 'x' or 'X'
     2. Each segment information texts are labelled from 0
+    
+(6) Export entire grid map information into a text file = keyboard press of 'o' or 'O'
+
+(7) Load and populate grid map information from a text file = keyboard press of 'l' or 'L'
 
 FAQ:
 1. How to increase window size? Under the void setup() change the size parameters.
