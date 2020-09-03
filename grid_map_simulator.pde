@@ -92,22 +92,29 @@ void mousePressed(){
 }
 
 void keyPressed(){
-  if((key == 'S') || (key == 's')){ //set start point by moving the cursor onto the grid and press 's'
+//FEATURE-1: [S]tart point
+//set start point by moving the cursor onto the grid and press 's'
+  if((key == 'S') || (key == 's')){ 
     board[mouseY/bs][mouseX/bs] = 1;
   }
-  if((key == 'E') || (key == 'e')){ //set end point by moving the cursor onto the grid and press 'e'
+//FEATURE-2: [E]nd point
+//set end point by moving the cursor onto the grid and press 'e'
+  if((key == 'E') || (key == 'e')){ 
     board[mouseY/bs][mouseX/bs] = 2;
   }
-  if((key == 'I') || (key == 'i')){ //export the grid map as an image 
-    save("map.jpg");
-  }
+//FEATURE-3: start segment [D]ivision
+//starts segment sequence > to be followed by corner identification
   if((key == 'D') || (key == 'd')){ 
     segmentMode = true;
   }
+//FEATURE-4: [C]lear grid value to default
+//clear grid value by moving the cursor onto the grid and press 'c'
   if((key == 'C') || (key == 'c')){
     board[mouseY/bs][mouseX/bs] = 0;
   }
-  if((key == 'L') || (key == 'l')){ //export segment dimensions and waypoints
+//FEATURE-5: e[X]port segment dimension and waypoint
+//export all segment dimension and waypoint
+  if((key == 'X') || (key == 'x')){ 
     for(int[] xy : segmentList){
         
         //segment dimensions
@@ -140,6 +147,8 @@ void keyPressed(){
         saveStrings("segment-" + str(segAid++) + ".txt", list);
     }
   }
+//FEATURE-6: [O]utput entire map status into text file
+//export entire grid map status by the keyboard press of 'o'
   if((key == 'O') || (key == 'o')){ 
     int gsCnt = 0; //string array counter
     
@@ -148,10 +157,26 @@ void keyPressed(){
         gridStats[gsCnt] = str(board[j][i]);
         gsCnt++;
       }
-      }
-    saveStrings("gridMap.txt", gridStats);    
+    }
+    saveStrings("o_gridMap.txt", gridStats);    
+  }
+//FEATURE-7: [L]oad text file and populate entire map onto the emulator
+//import and populate entire grid map from text file by the keyboard press of 'l'
+  if((key == 'L') || (key == 'l')){ 
+    String[] lines = loadStrings("p_GridMap.txt");
+
+    int gsCnt = 0;
+
+    for(int j=0; j<h; j++){
+      for(int i=0; i<w; i++){
+        board[j][i] = int(lines[gsCnt]);
+        gsCnt++;    
+      }  
+    }   
   }
 }
+
+//METHODS...
 
 //set the grids of segmented areas with a value of 3
 void segmentArea(int[] s){
