@@ -1,16 +1,18 @@
-int w = 10, h = 10, bs = 60;
 /*
 w = number of columns
 h = number of rows
 bs = pixels per box
 */
+
+int w = 10, h = 10, bs = 60;
+
 float obs = bs * 0.8; //obstacle size
-
 float wp = bs * 0.8; //waypoint size
-
 float mp = (bs - obs)/2; //midpoint of grid to draw object
 
 int[][] board = new int[h][w];
+
+String[] gridStats = new String[h*w]; //store information of indidivual grids
 
 int[] segments = new int[8];
 int v = 0; //coordniates counter
@@ -54,12 +56,12 @@ void draw(){
             ellipse(((i*bs)+mp), ((j*bs)+mp), wp, wp);
           }
           else
-            if(board[j][i] == 3){ //sets segmented areas in grey squares
+            if(board[j][i] == 3){ //sets segmenteed areas in grey squares
               fill(186, 186, 186);
               rect(i*bs, j*bs, bs, bs);      
             }
             else
-            if(board[j][i] == 0){ //clears the grid to default 
+            if(board[j][i] == 0){ //sets segmenteed areas in grey squares
               fill(255);
               stroke(0);
               rect(i*bs, j*bs, bs, bs);      
@@ -99,10 +101,10 @@ void keyPressed(){
   if((key == 'I') || (key == 'i')){ //export the grid map as an image 
     save("map.jpg");
   }
-  if((key == 'D') || (key == 'd')){ //activate segment function
+  if((key == 'D') || (key == 'd')){ 
     segmentMode = true;
   }
-  if((key == 'C') || (key == 'c')){ //clear a grid by moving the cursor onto the grid and press 'c'
+  if((key == 'C') || (key == 'c')){
     board[mouseY/bs][mouseX/bs] = 0;
   }
   if((key == 'L') || (key == 'l')){ //export segment dimensions and waypoints
@@ -137,6 +139,17 @@ void keyPressed(){
         list[1] = str(sp) + ">>" + str(ep);
         saveStrings("segment-" + str(segAid++) + ".txt", list);
     }
+  }
+  if((key == 'O') || (key == 'o')){ 
+    int gsCnt = 0; //string array counter
+    
+    for(int j=0; j<h; j++){          
+      for(int i=0; i<w; i++){
+        gridStats[gsCnt] = str(board[j][i]);
+        gsCnt++;
+      }
+      }
+    saveStrings("gridMap.txt", gridStats);    
   }
 }
 
