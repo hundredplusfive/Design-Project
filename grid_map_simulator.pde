@@ -115,15 +115,12 @@ void keyPressed(){
 //FEATURE-5: e[X]port segment dimension and waypoint
 //export all segment dimension and waypoint
   if((key == 'X') || (key == 'x')){ 
-    for(int[] xy : segmentList){
-        
-        //segment dimensions
-        int colSize = ((xy[0] - xy[6]) + 1);
-        int roSize = ((xy[5] - xy[7]) + 1);
+	String[] corDim = new String[8]; //segment dimension in real coordinates    
+	
+	for(int[] xy : segmentList){
         
         //start and end points
-        int vertCount = 0; //counter for verticeID
-        int sp = -1, ep = -1;
+        String sp = "NA", ep = "NA";
         
         int colStart = xy[6], colEnd = xy[0];
         int roStart = xy[7], roEnd = xy[5];
@@ -131,19 +128,24 @@ void keyPressed(){
         for(int cs = colStart; cs <= colEnd; cs++){
           for(int rs = roStart; rs <= roEnd; rs++){
             if(board[rs][cs] == 1){
-              sp = vertCount;
+              sp = str(cs) + "," + str(rs);
             }
             if(board[rs][cs] == 2){
-              ep = vertCount;
+              ep = str(cs) + "," + str(rs);
             }
-            vertCount++;
           }
         }
-        
-        //export to text file
+
+		for(int c = 0; c < 8; c++){
+			corDim[c] = str(xy[c]);					
+		}
+
+		String xCorDim = join(corDim, ","); //join corDim and export as a single string
+		
+		//export to text file
         String list[] = new String[2];
-        list[0] = str(colSize) + "x" + str(roSize);
-        list[1] = str(sp) + ">>" + str(ep);
+        list[0] = xCorDim;
+		list[1] = sp + ">>" + ep;
         saveStrings("segment-" + str(segAid++) + ".txt", list);
     }
   }
