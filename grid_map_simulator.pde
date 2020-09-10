@@ -136,13 +136,13 @@ void keyPressed(){
           }
         }
 
-		for(int c = 0; c < 8; c++){
-			corDim[c] = str(xy[c]);					
-		}
+	for(int c = 0; c < 8; c++){
+		corDim[c] = str(xy[c]);					
+	}
 
-		String xCorDim = join(corDim, ","); //join corDim and export as a single string
+	String xCorDim = join(corDim, ","); //join corDim and export as a single string
 		
-		//export to text file
+	//export to text file
         String list[] = new String[2];
         list[0] = xCorDim;
 		list[1] = sp + ">>" + ep;
